@@ -46,7 +46,12 @@ Device          g16v8a;
 /* desireable, and very much used by and expected in Coco games. Later        */
 /* model Coco's use increasingly complex circuits to generate a stronger,     */
 /* more reliable colorburst, however none are very correct. This              */
-/* logic is indended to correct that deficiency.                              */
+/* logic is indended to correct that deficiency. A correct color burst should */
+/* be approximately 10 cycles of the color carrier frequency located during   */
+/* the back porch period. The back porch is the perioid after hsync and       */
+/* before pixel data begins). The colorburst provides a reference phase used  */
+/* by the display during color hue decoding. Small shifts/errors in the phase */
+/* of the colorburst will result in noticeable shifts in color hue.           */
 /*                                                                            */
 /* CLK and HS, CSS and /GM0 are inputs to this logic. When CSS and            */
 /* /GM0 are both high, a monochrome color mode has been activated in the 6847 */
@@ -100,7 +105,7 @@ Device          g16v8a;
 /* 18  COLORBURST_OUT: High when the clock is high during the colorburst      */
 /*    period. Zero otherwise. Inverted when INVERT_COLORBURST_OUTPUTS is      */
 /*    high.                                                                   */
-/* 19    CLK_THRU: Passthrough of CLK_COPY. Provided to yeild a clock where   */
+/* 19 CLK_THRU: Passthrough of CLK_COPY. Provided to yeild a clock where      */
 /*    the phase is closer to the phase of the other outputs (especially,      */
 /*    COLORBURST_OUT). May be useful in approach 2 above.                     */
 /*                                                                            */
