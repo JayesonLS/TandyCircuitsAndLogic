@@ -1,0 +1,89 @@
+%SIGNAL
+PIN  12 =  Q0 
+PIN  13 =  Q1 
+PIN  14 =  Q2 
+PIN  15 =  Q3 
+PIN   1 =  clk 
+PIN   2 =  clk_copy 
+PIN  19 =  clk_thru 
+PIN  17 =  colorburst_active_out 
+PIN  18 =  colorburst_out 
+PIN   4 =  css 
+PIN   3 =  hs 
+PIN   5 =  inv_gm0 
+PIN   6 =  invert_colorburst_outputs 
+PIN  16 =  last_hs 
+PIN  11 =  oe 
+%END
+
+%FIELD
+%END
+
+%EQUATION
+Q0.d  =>
+    !Q0 & Q1 & css & inv_gm0
+  # !Q0 & Q2 & css & inv_gm0
+  # !Q0 & Q3 & css & inv_gm0
+  # !Q0 & css & !hs & inv_gm0 & last_hs
+
+Q1.d  =>
+    Q0 & !Q1 & css & inv_gm0
+  # !Q0 & Q1 & css & inv_gm0
+
+Q2.d  =>
+    Q0 & Q1 & !Q2 & css & inv_gm0
+  # !Q1 & Q2 & css & inv_gm0
+  # !Q0 & Q2 & css & inv_gm0
+
+Q3.d  =>
+    Q0 & Q1 & Q2 & !Q3 & css & inv_gm0
+  # !Q0 & Q3 & css & inv_gm0
+  # !Q2 & Q3 & css & inv_gm0
+  # !Q1 & Q3 & css & inv_gm0
+
+clk_thru =>
+    clk_copy
+
+colorburst_active =>
+    Q2 & !Q3
+  # !Q2 & Q3
+  # !Q1 & Q2 & Q3
+
+colorburst_active_out =>
+    !Q1 & Q2 & Q3 & !invert_colorburst_outputs
+  # !Q2 & Q3 & !invert_colorburst_outputs
+  # Q2 & !Q3 & !invert_colorburst_outputs
+  # !Q2 & !Q3 & invert_colorburst_outputs
+  # Q1 & Q2 & Q3 & invert_colorburst_outputs
+
+colorburst_out =>
+    !Q1 & Q2 & Q3 & !clk_copy & !invert_colorburst_outputs
+  # Q2 & !Q3 & !clk_copy & !invert_colorburst_outputs
+  # !Q2 & Q3 & !clk_copy & !invert_colorburst_outputs
+  # clk_copy & invert_colorburst_outputs
+  # !Q2 & !Q3 & invert_colorburst_outputs
+  # Q1 & Q2 & Q3 & invert_colorburst_outputs
+
+count_active =>
+    Q0 & css & inv_gm0
+  # Q1 & css & inv_gm0
+  # Q2 & css & inv_gm0
+  # css & !hs & inv_gm0 & last_hs
+  # Q3 & css & inv_gm0
+
+last_hs.d  =>
+    hs
+
+trigger =>
+    !hs & last_hs
+
+clk_thru.oe  =>
+    1 
+
+colorburst_active_out.oe  =>
+    1 
+
+colorburst_out.oe  =>
+    1 
+
+%END

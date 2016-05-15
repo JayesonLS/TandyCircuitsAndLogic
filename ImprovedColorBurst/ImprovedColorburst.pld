@@ -1,0 +1,160 @@
+Name            ImprovedColorBurst;
+Partno          TS0001;
+Revision        01;
+Date            2016/05/14;
+Designer        Jayeson Lee-Steere;
+Company         Titanium Studios Pty Ltd;
+Location        None;
+Assembly        None;
+Device          g16v8a;
+
+/******************************************************************************/
+/*                                                                            */
+/* Tandy Color Computer 1/2 artifact mode colorburst signal timing.           */
+/* ================================================================           */
+/*                                                                            */
+/* This logic generates two possible ways to generate an accurate colorburst  */
+/* signal when in MC6847/MC1372 artifact mode:                                */
+/*                                                                            */
+/* 1. The colorburst_active_out signal indicates when a colorburst should     */
+/*    be active. By pulling down the 'A' phase color signal level via a 1K    */
+/*    resistor during this time, an appropriate colorburst will be            */
+/*    generated. Note that it is possible this colorburst is 10 degrees off   */
+/*    the correct phase, resulting in less desireable colors).                */
+/* 2. The colorburst_out signal generates pulses at the correct frequency     */
+/*    and phase to be added directly to the MC1732 output (pin 12). Note      */
+/*    that due to propogation delays in this logic, the phase may be          */
+/*    incorrect. Using the output clock from this circuit to time the 6847    */
+/*    and 1372 may produce better results. Might also cause issues with the   */
+/*    6847 being behind the rest of the Coco timing. How best to strap to the */
+/*    MC1372 output is not clear either. The Coco 1 F board appears to use an */
+/*    RLC circuit. More experimentation needed (this approach has not been    */
+/*    tested).                                                                */
+/*                                                                            */
+/* Theory of Operation                                                        */
+/* -------------------                                                        */
+/*                                                                            */
+/* In the monochrome color modes, the MC6847 does not generate a colorburst   */
+/* signal. Color TV's, by design, force a monochrome display when no          */
+/* colorburst is present. This is to avoid issues with color artifacts        */
+/* on B/W broadcast/content. However there is enough clock noise bleeding     */
+/* into the video output of early Color Computers that some TV's will         */
+/* interpret this as a colorburst. The resultant artifact colors are          */
+/* desireable, and very much used by and expected in Coco games. Later        */
+/* model Coco's use increasingly complex circuits to generate a stronger,     */
+/* more reliable colorburst, however none are very correct. This              */
+/* logic is indended to correct that deficiency.                              */
+/*                                                                            */
+/* CLK and HS, CSS and /GM0 are inputs to this logic. When CSS and            */
+/* /GM0 are both high, a monochrome color mode has been activated in the 6847 */
+/* and the 6847 is no longer generating a color burst.                        */
+/*                                                                            */
+/* The HS signal is high during the entire hsync period of the video signal.  */
+/* In the period immediately after (back porch), approximately 10 cycles of   */
+/* colorburst should be generated. The colorburst is at the same frequency as */
+/* as the CLK.                                                                */
+/*                                                                            */
+/* This logic works as follows: on the high to low transition of HS (start of */
+/* front porch), and if CSS and /GM0 are both high, a 4 bit counter begins    */
+/* counting, advanced by CLK. When the counter value is between 4 and 14      */
+/* inclusive, COLORBURST_ACTIVE_OUT is raised high and COLORBURST_OUT is      */
+/* raised high when CLK is high. These outputs can be used to implement       */
+/* strategies 1 and 2, respectively, as described above. When the counter     */
+/* loops to zero, counting stops until triggered again by the next HS high    */
+/* to low transition.                                                         */
+/*                                                                            */
+/* Input connections                                                          */
+/* -----------------                                                          */
+/*                                                                            */
+/* 1  CLK: Connect to the MC7847 CLK (pin 33). This input must be schmitt     */
+/*    buffered (inverse is OK).                                               */
+/* 2  CLK_COPY: Connect the same as pin 1.                                    */
+/* 3  HS: Connect to the inverse of MC6847 /HS (pin 38). Recommend schmitt    */
+/*    buffering.                                                              */
+/* 4  CSS: Connect to MC6847 CSS (pin 39). Does not require schmitt           */
+/*    buffering.                                                              */
+/* 5  /GM0: Connect to MC6847 /GM0 (pin 30). Does not require schmitt         */
+/*    buffering.                                                              */
+/* 6  INVERT_COLORBURST_OUTPUTS: Inverts COLORBURST_OUT and                   */
+/*    COLORBURST_ACTIVE_OUT outputs. Set low when using the output(s) to      */
+/*    drive an NPN pulldown transistor. Set high when using an output to set  */
+/*    the OE (output enable) input on pin 11.                                 */
+/* 7-9  Unused. Connect to VCC.                                               */
+/* 11  OE: Output enable. Set low to disable the register outputs. High to    */
+/*     enable the register outputs: LAST_HS and Q0 to Q3. The other 3 outputs */
+/*     are not registered and always active.                                  */
+/*                                                                            */
+/* Output connections                                                         */
+/* ------------------                                                         */
+/*                                                                            */
+/* 12-15  Q0-Q3: Counter registers. All zeros except during back porch.       */
+/*    Tristate when OE is high.                                               */
+/* 16  LAST_HS: Register that holds the HS values and is used to detect the   */
+/*    high to low transition (end of hsync, start of back porch). Tristate    */
+/*    when OE is high.                                                        */
+/* 17  COLORBURST_ACTIVE_OUT: High during the period when colorburst should   */
+/*    be occuring. Inverted when INVERT_COLORBURST_OUTPUTS is high.           */
+/* 18  COLORBURST_OUT: High when the clock is high during the colorburst      */
+/*    period. Zero otherwise. Inverted when INVERT_COLORBURST_OUTPUTS is      */
+/*    high.                                                                   */
+/* 19    CLK_THRU: Passthrough of CLK_COPY. Provided to yeild a clock where   */
+/*    the phase is closer to the phase of the other outputs (especially,      */
+/*    COLORBURST_OUT). May be useful in approach 2 above.                     */
+/*                                                                            */
+/* Notes                                                                      */
+/* -----                                                                      */
+/*                                                                            */
+/* The LAST_HS output is low during the period where the colorburst is        */
+/* required. By pulling OE low, such as with the COLORBURST_OUT or            */
+/* COLORBURST_ACTIVE_OUT signals, the equivalent of an open collector         */
+/* pulldown is achieved. This will avoid the need for a separate transistor.  */
+/*                                                                            */
+/* GAL's have higher switching speeds than the stock circuitry in the Coco.   */
+/* As previosly mentioned, schmitt buffering the inputs is recommended. Using */
+/* a fast logic family is also recommended for this (AHCT?) to reduces        */
+/* propogation delays and possible issues with slow outputs.                  */
+/*                                                                            */
+/* The high switching speed also means high frequency design issues may come  */
+/* into play. Use heavy ground planes, large and small decoupling cap values, */
+/* short traces. Other impedence matching may be required. Recommend checking */
+/* signal quality with a scope.                                               */
+/*                                                                            */
+/******************************************************************************/
+
+/* Inputs */
+
+Pin 1 =  clk;
+Pin 11 = oe;
+
+Pin 2 = clk_copy;
+Pin 3 = hs;
+Pin 4 = css;
+Pin 5 = inv_gm0;
+Pin 6 = invert_colorburst_outputs;
+
+/* Outputs */
+
+Pin 19 = clk_thru;
+Pin 18 = colorburst_out;
+Pin 17 = colorburst_active_out;
+Pin 16 = last_hs;
+Pin [12..15] = [Q0..3];
+
+/* Declarations and Intermediate Variable Definitions */
+
+/* Equations */
+
+trigger = last_hs & !hs; /* Falling edge */
+last_hs.d = hs;
+
+count_active = (Q0 # Q1 # Q2 # Q3 # trigger) & css & inv_gm0;
+
+Q0.d = (!Q0) & count_active;
+Q1.d = (Q0 & !Q1 # !Q0 & Q1) & count_active;
+Q2.d = (Q0 & Q1 & !Q2 # !(Q0 & Q1) & Q2) & count_active;
+Q3.d = (Q0 & Q1 & Q2 & !Q3 # !(Q0 & Q1 & Q2) & Q3) & count_active;
+
+colorburst_active = (Q2 $ Q3) # (!Q1 & Q2 & Q3);
+colorburst_active_out = colorburst_active $ invert_colorburst_outputs;
+colorburst_out = (colorburst_active & !clk_copy) $ invert_colorburst_outputs;
+clk_thru = clk_copy;
