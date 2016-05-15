@@ -16,20 +16,23 @@ Device          g16v8a;
 /* This logic generates two possible ways to generate an accurate colorburst  */
 /* signal when in MC6847/MC1372 artifact mode:                                */
 /*                                                                            */
-/* 1. The colorburst_active_out signal indicates when a colorburst should     */
+/* 1. The COLORBURST_ACTIVE_OUT signal indicates when a colorburst should     */
 /*    be active. By pulling down the 'A' phase color signal level via a 1K    */
 /*    resistor during this time, an appropriate colorburst will be            */
 /*    generated. Note that it is possible this colorburst is 10 degrees off   */
 /*    the correct phase, resulting in less desireable colors).                */
-/* 2. The colorburst_out signal generates pulses at the correct frequency     */
+/*                                                                            */
+/* 2. The COLORBURST_OUT signal generates pulses at the correct frequency     */
 /*    and phase to be added directly to the MC1732 output (pin 12). Note      */
 /*    that due to propogation delays in this logic, the phase may be          */
 /*    incorrect. Using the output clock from this circuit to time the 6847    */
 /*    and 1372 may produce better results. Might also cause issues with the   */
 /*    6847 being behind the rest of the Coco timing. How best to strap to the */
 /*    MC1372 output is not clear either. The Coco 1 F board appears to use an */
-/*    RLC circuit. More experimentation needed (this approach has not been    */
-/*    tested).                                                                */
+/*    RLC circuit. What may work better is to use the COLORBURST_ACTIVE_OUT   */
+/*    signal to control an analog switch between the 6847/1372 clock and      */
+/*    either the luminance signal or MC1372 output. More experimentation      */
+/*    needed (this approach has not been tested).                             */
 /*                                                                            */
 /* Theory of Operation                                                        */
 /* -------------------                                                        */
