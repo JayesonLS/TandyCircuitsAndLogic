@@ -1,7 +1,7 @@
-CocoProgrammableLogic
+TandyProgrammableLogic
 =====================
 
-Programmable Logic for Tandy Color Computer (Coco) Projects
+Programmable Logic for use with Tandy  Computers
 
 See the main source file (.pld for WinCUPL projects) in each folder for 
 specific details. Check that the compiled file (.jed) is up to date
