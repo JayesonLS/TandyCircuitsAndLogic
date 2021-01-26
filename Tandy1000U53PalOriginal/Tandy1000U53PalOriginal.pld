@@ -1,0 +1,119 @@
+Name            Tandy1000U53PalOriginal;
+Partno          TS0002;
+Revision        01;
+Date            2021/01/24;
+Designer        Jayeson Lee-Steere;
+Company         Titanium Studios Pty Ltd;
+Location        None;
+Assembly        None;
+Device          g22v10;
+
+/******************************************************************************/
+/*                                                                            */
+/*****WORK IN PROGRESS ******* WORK IN PROGRESS ******* WORK IN PROGRESS ******/
+/*****WORK IN PROGRESS ******* WORK IN PROGRESS ******* WORK IN PROGRESS ******/
+/*****WORK IN PROGRESS ******* WORK IN PROGRESS ******* WORK IN PROGRESS ******/
+/*                                                                            */
+/* Completely untested and uncertain whether the complemented inputs/outputs  */ 
+/* have been implemented backwards or not.                                    */
+/*                                                                            */
+/* ***WORK IN PROGRESS *** ***WORK IN PROGRESS *** ***WORK IN PROGRESS ***    */
+/*****WORK IN PROGRESS ******* WORK IN PROGRESS ******* WORK IN PROGRESS ******/
+/*****WORK IN PROGRESS ******* WORK IN PROGRESS ******* WORK IN PROGRESS ******/
+/*                                                                            */
+/* Replacement for Memory Address Decode PAL for original Tandy 1000 Board    */
+/* =======================================================================    */
+/*                                                                            */
+/* The chip is located at U53 on the original Tandy 1000 main logic board.    */
+/*                                                                            */
+/* This implementation replicates the original version of this logic          */
+/* supporting the BIOS in two 8Kx8 ROMs.                                      */
+/*                                                                            */
+/* The orignal chip used a 82S153 PAL which has functionality not present in  */
+/* a 16V8 GAL. Specifically, pin 9 is used as an output whereas on a 16V8,    */
+/* pin 9 is only an input; pin 9 uses more product terms than is available on */
+/* any 16V8 output; and the equations as written by Tandy require feedback    */
+/* from more pins than is possible on a 16V8.                                 */
+/*                                                                            */
+/* Therefore, this design uses a 22V10 GAL and requires an intermediate board */
+/* to remap pins. The design is laid out so that the top 20 pins of the 22V10 */
+/* map 1:1 to the top 20 pins of the 82S153, with the following exceptions:   */
+/* 22V10 pin 14 must be routed to 82S153 pin 9; and, 22V10 GND (pin 12) must  */
+/* be routed to 82S153 GND (pin 10).                                          */
+/*                                                                            */
+/******************************************************************************/
+
+/*
+ * U53 pinout, DIP, top view
+ *
+ *   A17.[ 1     20 ].VCC
+ *   A18.[ 2     19 ].ROMCS0*
+ *   A19.[ 3     18 ].ROMCS1*
+ *   A16.[ 4     17 ].MEMSEL*
+ *   A15.[ 5     16 ].A13
+ * MEMW*.[ 6     15 ].HGMEMAC*
+ * MEMR*.[ 7     14 ].MC1
+ * RFSH*.[ 8     13 ].MC2
+ *VSACC*.[ 9     12 ].A14
+ *   GND.[ 10    11 ].MC3
+ */
+
+/*
+ * 22V10 GAL pinout, DIP, top view
+ *
+ * I/CLK.[ 1     24 ].VCC
+ *     I.[ 2     23 ].I/O/Q
+ *     I.[ 3     22 ].I/O/Q
+ *     I.[ 4     21 ].I/O/Q
+ *     I.[ 5     20 ].I/O/Q
+ *     I.[ 6     19 ].I/O/Q
+ *     I.[ 7     18 ].I/O/Q
+ *     I.[ 8     17 ].I/O/Q
+ *     I.[ 9     16 ].I/O/Q
+ *     I.[ 10    15 ].I/O/Q
+ *     I.[ 11    14 ].I/O/Q
+ *   GND.[ 12    13 ].I
+ */
+
+
+/* Inputs */
+Pin 20 =  A13;
+Pin 16 =  A14;
+Pin 5  =  A15;
+Pin 4  =  A16;
+Pin 1  =  A17;
+Pin 2  =  A18;
+Pin 3  =  A19;
+Pin 8  =  !RFSH;
+Pin 7  =  !MEMR;
+Pin 6  =  !MEMW;
+Pin 18 =  MC1;
+Pin 17 =  MC2;
+Pin 15 =  MC3;
+
+/* Outputs */
+
+Pin 14 = !VSACC;
+Pin 19 = !HGMEMAC;
+Pin 23 = !ROMCS0;
+Pin 22 = !ROMCS1;
+Pin 21 = !MEMSEL;
+
+/* Equations */
+
+HGMEMAC =  RFSH & !MEMR & A19 & !A18 & A17 & A16 & A15
+        #  RFSH & !MEMW & A19 & !A18 & A17 & A16 & A15;
+VSACC   =  RFSH & !MEMR & !A19 & !A18 & !A17 & !MC3 & !MC2 & !MC1
+        #                 !A19 & !A18 &  A17 & !MC3 & !MC2 &  MC1
+        #                 !A19 &  A18 & !A17 & !MC3 &  MC2 & !MC1
+        #                 !A19 &  A18 &  A17 & !MC3 &  MC2 &  MC1
+        #  RFSH & !MEMR &  A19 & !A18 & !A17 &  MC3 & !MC2 & !MC1
+        # !RFSH & !MEMW & !A19 & !A18 & !A17 & !MC3 & !MC2 & !MC1
+        #                 !A19 & !A18 &  A17 & !MC3 & !MC2 &  MC1
+        #                 !A19 &  A18 & !A17 & !MC3 &  MC2 & !MC1
+        #  RFSH & !MEMW &  A19 & !A18 & !A17 &  MC3 & !MC2 & !MC1
+        #  HGMEMAC;
+ROMCS0 =  RFSH & !MEMR & A19 & A18 & A17 & A16 & A15 & A14 & A13;
+ROMCS1  =  RFSH & !MEMR & A19 & A18 & A17 & A16 & A15 & A14 & !A13;
+MEMSEL  =  VSACC # HGMEMAC # ROMCS0 # ROMCS1;
+
