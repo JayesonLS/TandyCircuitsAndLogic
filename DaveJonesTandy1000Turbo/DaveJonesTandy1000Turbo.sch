@@ -359,13 +359,11 @@ Wire Wire Line
 Wire Wire Line
 	3200 1600 3100 1600
 Wire Wire Line
-	3100 1600 3100 4350
-Wire Wire Line
 	3100 4350 3200 4350
 Wire Wire Line
 	3200 1800 3000 1800
 Wire Wire Line
-	3000 1800 3000 4550
+	3000 1800 3000 2300
 Wire Wire Line
 	3000 4550 3200 4550
 Wire Wire Line
@@ -386,18 +384,6 @@ Wire Wire Line
 	2700 2100 2700 4850
 Wire Wire Line
 	2700 4850 3200 4850
-Wire Wire Line
-	3200 2300 2600 2300
-Wire Wire Line
-	2600 2300 2600 5050
-Wire Wire Line
-	2600 5050 3200 5050
-Wire Wire Line
-	3200 5150 2500 5150
-Wire Wire Line
-	2500 5150 2500 2400
-Wire Wire Line
-	2500 2400 3200 2400
 Wire Wire Line
 	3200 5550 2300 5550
 Wire Wire Line
@@ -525,7 +511,7 @@ L Device:Crystal Y1
 U 1 1 601A9CA7
 P 5100 5500
 F 0 "Y1" V 5054 5631 50  0000 L CNN
-F 1 "20 / 22 MHz Crystal" V 4800 5100 50  0000 L CNN
+F 1 "20/22MHz Crystal" V 4800 5100 50  0000 L CNN
 F 2 "Crystal:Crystal_HC49-U_Vertical" H 5100 5500 50  0001 C CNN
 F 3 "~" H 5100 5500 50  0001 C CNN
 	1    5100 5500
@@ -537,7 +523,7 @@ U 1 1 601AB940
 P 5700 5350
 F 0 "R2" V 5493 5350 50  0000 C CNN
 F 1 "680R" V 5584 5350 50  0000 C CNN
-F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal" V 5630 5350 50  0001 C CNN
+F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal" V 5630 5350 50  0001 C CNN
 F 3 "~" H 5700 5350 50  0001 C CNN
 	1    5700 5350
 	0    1    1    0   
@@ -548,7 +534,7 @@ U 1 1 601ACEA5
 P 5700 5650
 F 0 "R1" V 5493 5650 50  0000 C CNN
 F 1 "680R" V 5584 5650 50  0000 C CNN
-F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal" V 5630 5650 50  0001 C CNN
+F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal" V 5630 5650 50  0001 C CNN
 F 3 "~" H 5700 5650 50  0001 C CNN
 	1    5700 5650
 	0    1    1    0   
@@ -638,4 +624,40 @@ Wire Wire Line
 Connection ~ 2400 5350
 Wire Wire Line
 	2400 5350 2100 5350
+$Comp
+L power:GND #PWR0101
+U 1 1 60140166
+P 3000 5950
+F 0 "#PWR0101" H 3000 5700 50  0001 C CNN
+F 1 "GND" H 3005 5777 50  0000 C CNN
+F 2 "" H 3000 5950 50  0001 C CNN
+F 3 "" H 3000 5950 50  0001 C CNN
+	1    3000 5950
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3000 4550 3000 5050
+Connection ~ 3000 4550
+Wire Wire Line
+	3200 5050 3000 5050
+Connection ~ 3000 5050
+Wire Wire Line
+	3000 5050 3000 5150
+Wire Wire Line
+	3200 5150 3000 5150
+Connection ~ 3000 5150
+Wire Wire Line
+	3000 5150 3000 5950
+Wire Wire Line
+	3100 1600 3100 4350
+Wire Wire Line
+	3200 2300 3000 2300
+Connection ~ 3000 2300
+Wire Wire Line
+	3000 2300 3000 2400
+Wire Wire Line
+	3200 2400 3000 2400
+Connection ~ 3000 2400
+Wire Wire Line
+	3000 2400 3000 4550
 $EndSCHEMATC
