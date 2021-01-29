@@ -1,7 +1,7 @@
-TandyProgrammableLogic
+TandyCircuitsAndLogic
 =====================
 
-Programmable Logic for use with Tandy  Computers
+Circuits and programmable Logic for use with Tandy computers.
 
 See the main source file (.pld for WinCUPL projects) in each folder for 
 specific details. Check that the compiled file (.jed) is up to date
