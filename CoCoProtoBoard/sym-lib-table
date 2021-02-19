@@ -1,4 +1,3 @@
 (sym_lib_table
-  (lib (name CoCoProtoBoard-rescue)(type Legacy)(uri ${KIPRJMOD}/CoCoProtoBoard-rescue.lib)(options "")(descr "")(disabled))
   (lib (name 00_Custom)(type Legacy)(uri ${KIPRJMOD}/../KiCadLibraries/00_Custom.lib)(options "")(descr ""))
 )
