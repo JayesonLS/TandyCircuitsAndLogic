@@ -14,4 +14,4 @@ on the edge connector. An ENIG finish is not recommended - the gold plate is
 extremely thin and will wear off very quickly. Hard gold plated fingers is 
 fine, however likely overkill for prototypes.
 
-![Render of boards][CoCoProtoBoard.png]
+![Render of boards](CoCoProtoBoard.png)
