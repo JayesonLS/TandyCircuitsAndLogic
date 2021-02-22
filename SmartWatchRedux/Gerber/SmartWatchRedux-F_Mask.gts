@@ -1,12 +1,12 @@
 %TF.GenerationSoftware,KiCad,Pcbnew,(5.1.9)-1*%
-%TF.CreationDate,2021-02-16T22:08:35+08:00*%
+%TF.CreationDate,2021-02-22T17:40:15+08:00*%
 %TF.ProjectId,SmartWatchRedux,536d6172-7457-4617-9463-685265647578,rev?*%
 %TF.SameCoordinates,Original*%
 %TF.FileFunction,Soldermask,Top*%
 %TF.FilePolarity,Negative*%
 %FSLAX46Y46*%
 G04 Gerber Fmt 4.6, Leading zero omitted, Abs format (unit mm)*
-G04 Created by KiCad (PCBNEW (5.1.9)-1) date 2021-02-16 22:08:35*
+G04 Created by KiCad (PCBNEW (5.1.9)-1) date 2021-02-22 17:40:15*
 %MOMM*%
 %LPD*%
 G01*
