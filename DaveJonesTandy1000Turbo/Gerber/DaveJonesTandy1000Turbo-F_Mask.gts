@@ -1,12 +1,12 @@
 %TF.GenerationSoftware,KiCad,Pcbnew,(5.1.9)-1*%
-%TF.CreationDate,2021-02-16T22:14:15+08:00*%
+%TF.CreationDate,2021-05-07T21:51:07+08:00*%
 %TF.ProjectId,DaveJonesTandy1000Turbo,44617665-4a6f-46e6-9573-54616e647931,rev?*%
 %TF.SameCoordinates,Original*%
 %TF.FileFunction,Soldermask,Top*%
 %TF.FilePolarity,Negative*%
 %FSLAX46Y46*%
 G04 Gerber Fmt 4.6, Leading zero omitted, Abs format (unit mm)*
-G04 Created by KiCad (PCBNEW (5.1.9)-1) date 2021-02-16 22:14:15*
+G04 Created by KiCad (PCBNEW (5.1.9)-1) date 2021-05-07 21:51:07*
 %MOMM*%
 %LPD*%
 G01*
