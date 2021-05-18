@@ -1,0 +1,274 @@
+EESchema Schematic File Version 4
+EELAYER 30 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title "Omniboard"
+Date "2016-09-01"
+Rev "1.0"
+Comp "Titanium Studios Pty Ltd"
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L Connector_Generic:Conn_01x15 J2
+U 1 1 6096062D
+P 5350 3150
+F 0 "J2" H 5430 3192 50  0000 L CNN
+F 1 "Output" H 5430 3101 50  0000 L CNN
+F 2 "00_Custom:Molex5273Header_15" H 5350 3150 50  0001 C CNN
+F 3 "~" H 5350 3150 50  0001 C CNN
+	1    5350 3150
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector_Generic:Conn_01x06 J1
+U 1 1 60962E74
+P 2700 3050
+F 0 "J1" H 2618 3467 50  0000 C CNN
+F 1 "Input" H 2618 3376 50  0000 C CNN
+F 2 "00_Custom:Molex5273Header_6" H 2700 3050 50  0001 C CNN
+F 3 "~" H 2700 3050 50  0001 C CNN
+	1    2700 3050
+	-1   0    0    -1  
+$EndComp
+$Comp
+L power:-12V #PWR0101
+U 1 1 609654E5
+P 3000 3450
+F 0 "#PWR0101" H 3000 3550 50  0001 C CNN
+F 1 "-12V" H 3015 3623 50  0000 C CNN
+F 2 "" H 3000 3450 50  0001 C CNN
+F 3 "" H 3000 3450 50  0001 C CNN
+	1    3000 3450
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	2900 3350 3000 3350
+Wire Wire Line
+	3000 3350 3000 3450
+Wire Wire Line
+	3300 3250 3300 3450
+Connection ~ 3300 3250
+Wire Wire Line
+	2900 3250 3300 3250
+Wire Wire Line
+	3300 3150 3300 3250
+Wire Wire Line
+	2900 3150 3300 3150
+$Comp
+L power:GND #PWR0102
+U 1 1 60964B21
+P 3300 3450
+F 0 "#PWR0102" H 3300 3200 50  0001 C CNN
+F 1 "GND" H 3305 3277 50  0000 C CNN
+F 2 "" H 3300 3450 50  0001 C CNN
+F 3 "" H 3300 3450 50  0001 C CNN
+	1    3300 3450
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+5V #PWR0103
+U 1 1 60966CBF
+P 3300 2750
+F 0 "#PWR0103" H 3300 2600 50  0001 C CNN
+F 1 "+5V" H 3315 2923 50  0000 C CNN
+F 2 "" H 3300 2750 50  0001 C CNN
+F 3 "" H 3300 2750 50  0001 C CNN
+	1    3300 2750
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+12V #PWR0104
+U 1 1 60967A49
+P 3000 2750
+F 0 "#PWR0104" H 3000 2600 50  0001 C CNN
+F 1 "+12V" H 3015 2923 50  0000 C CNN
+F 2 "" H 3000 2750 50  0001 C CNN
+F 3 "" H 3000 2750 50  0001 C CNN
+	1    3000 2750
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2900 2850 3000 2850
+Wire Wire Line
+	3000 2850 3000 2750
+Wire Wire Line
+	2900 2950 3300 2950
+Wire Wire Line
+	3300 2950 3300 2750
+Wire Wire Line
+	2900 3050 3300 3050
+Wire Wire Line
+	3300 3050 3300 2950
+Connection ~ 3300 2950
+$Comp
+L Connector_Generic:Conn_01x02 J3
+U 1 1 60962380
+P 5350 2150
+F 0 "J3" H 5430 2142 50  0000 L CNN
+F 1 "Fan" H 5430 2051 50  0000 L CNN
+F 2 "00_Custom:FanConnector2Pin" H 5350 2150 50  0001 C CNN
+F 3 "~" H 5350 2150 50  0001 C CNN
+	1    5350 2150
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5150 3850 4750 3850
+Wire Wire Line
+	4750 3850 4750 3950
+$Comp
+L power:-12V #PWR0105
+U 1 1 60969B73
+P 4750 3950
+F 0 "#PWR0105" H 4750 4050 50  0001 C CNN
+F 1 "-12V" H 4765 4123 50  0000 C CNN
+F 2 "" H 4750 3950 50  0001 C CNN
+F 3 "" H 4750 3950 50  0001 C CNN
+	1    4750 3950
+	-1   0    0    1   
+$EndComp
+$Comp
+L power:GND #PWR0106
+U 1 1 6096A045
+P 5050 3950
+F 0 "#PWR0106" H 5050 3700 50  0001 C CNN
+F 1 "GND" H 5055 3777 50  0000 C CNN
+F 2 "" H 5050 3950 50  0001 C CNN
+F 3 "" H 5050 3950 50  0001 C CNN
+	1    5050 3950
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5050 3950 5050 3750
+Wire Wire Line
+	5050 3550 5150 3550
+Wire Wire Line
+	5150 3650 5050 3650
+Connection ~ 5050 3650
+Wire Wire Line
+	5050 3650 5050 3550
+Wire Wire Line
+	5050 3750 5150 3750
+Connection ~ 5050 3750
+Wire Wire Line
+	5050 3750 5050 3650
+$Comp
+L power:+5V #PWR0107
+U 1 1 6096B778
+P 4650 2050
+F 0 "#PWR0107" H 4650 1900 50  0001 C CNN
+F 1 "+5V" H 4665 2223 50  0000 C CNN
+F 2 "" H 4650 2050 50  0001 C CNN
+F 3 "" H 4650 2050 50  0001 C CNN
+	1    4650 2050
+	-1   0    0    -1  
+$EndComp
+$Comp
+L power:+12V #PWR0108
+U 1 1 6096B85E
+P 4950 2050
+F 0 "#PWR0108" H 4950 1900 50  0001 C CNN
+F 1 "+12V" H 4965 2223 50  0000 C CNN
+F 2 "" H 4950 2050 50  0001 C CNN
+F 3 "" H 4950 2050 50  0001 C CNN
+	1    4950 2050
+	-1   0    0    -1  
+$EndComp
+Wire Wire Line
+	5150 2150 4950 2150
+Wire Wire Line
+	4950 2150 4950 2050
+Wire Wire Line
+	5150 2250 5050 2250
+Connection ~ 5050 3550
+NoConn ~ 5150 2450
+Connection ~ 4950 2150
+NoConn ~ 5150 2950
+Wire Wire Line
+	5150 3450 4650 3450
+Wire Wire Line
+	4650 3450 4650 3350
+Wire Wire Line
+	5150 3350 4650 3350
+Connection ~ 4650 3350
+Wire Wire Line
+	4650 3350 4650 3250
+Wire Wire Line
+	5150 3250 4650 3250
+Connection ~ 4650 3250
+Wire Wire Line
+	4650 3250 4650 2550
+Wire Wire Line
+	5150 3050 4950 3050
+Wire Wire Line
+	4950 2150 4950 2850
+Wire Wire Line
+	5150 2850 4950 2850
+Connection ~ 4950 2850
+Wire Wire Line
+	4950 2850 4950 3050
+$Comp
+L Mechanical:MountingHole_Pad H1
+U 1 1 60977B1F
+P 6950 2700
+F 0 "H1" V 6904 2850 50  0000 L CNN
+F 1 "MountingHole_Pad" V 6995 2850 50  0000 L CNN
+F 2 "MountingHole:MountingHole_3.7mm_Pad" H 6950 2700 50  0001 C CNN
+F 3 "~" H 6950 2700 50  0001 C CNN
+	1    6950 2700
+	0    1    1    0   
+$EndComp
+$Comp
+L Mechanical:MountingHole_Pad H2
+U 1 1 60978589
+P 6950 3000
+F 0 "H2" V 6904 3150 50  0000 L CNN
+F 1 "MountingHole_Pad" V 6995 3150 50  0000 L CNN
+F 2 "MountingHole:MountingHole_3.7mm_Pad" H 6950 3000 50  0001 C CNN
+F 3 "~" H 6950 3000 50  0001 C CNN
+	1    6950 3000
+	0    1    1    0   
+$EndComp
+$Comp
+L power:GND #PWR0109
+U 1 1 609787A9
+P 6750 3100
+F 0 "#PWR0109" H 6750 2850 50  0001 C CNN
+F 1 "GND" H 6755 2927 50  0000 C CNN
+F 2 "" H 6750 3100 50  0001 C CNN
+F 3 "" H 6750 3100 50  0001 C CNN
+	1    6750 3100
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	6750 3100 6750 3000
+Wire Wire Line
+	6850 3000 6750 3000
+Connection ~ 5050 3150
+Wire Wire Line
+	5050 3150 5050 3550
+Wire Wire Line
+	5050 3150 5150 3150
+Wire Wire Line
+	5150 2550 4650 2550
+Connection ~ 4650 2550
+Wire Wire Line
+	4650 2550 4650 2050
+Wire Wire Line
+	5050 2250 5050 2650
+Wire Wire Line
+	5150 2650 5050 2650
+Connection ~ 5050 2650
+Wire Wire Line
+	5050 2650 5050 2750
+Wire Wire Line
+	5150 2750 5050 2750
+Connection ~ 5050 2750
+Wire Wire Line
+	5050 2750 5050 3150
+NoConn ~ 6850 2700
+$EndSCHEMATC
